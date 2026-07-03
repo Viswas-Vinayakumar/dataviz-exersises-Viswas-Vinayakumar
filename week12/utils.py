@@ -1,6 +1,7 @@
 # utils.py — shared by every page
 import pandas as pd
 import streamlit as st
+from pathlib import Path
 
 # ─────────────────────────────────────────────────────────────────────────────
 # cached loader — cap at 95th percentile INSIDE the loader so the
@@ -9,7 +10,8 @@ import streamlit as st
 # ─────────────────────────────────────────────────────────────────────────────
 @st.cache_data
 def load_data():
-    df = pd.read_csv('../data/airbnb_london.csv')
+    path = Path(__file__).parent.parent / 'data' / 'airbnb_london.csv'
+    df = pd.read_csv(path)
     p95 = df['price'].quantile(0.95)
     return df[df['price'] <= p95].copy(), p95   # .copy() → no SettingWithCopyWarning
 
