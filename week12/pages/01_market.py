@@ -13,7 +13,7 @@ filtered = sidebar_filters(df, p95)  # shared sidebar — same filters on every 
 # question title + 4 KPIs — BBD 5-second test: the metrics alone
 # tell the story (price level, delta vs market, where it's cheap)
 # ─────────────────────────────────────────────────────────────────────────────
-st.title('Is London Airbnb expensive right now?')
+st.title('What Does a London Airbnb Cost?')
 st.caption(f'Source: Inside Airbnb | {len(filtered):,} listings shown '
            f'of {len(df):,} total')
 
@@ -55,7 +55,7 @@ with col_left:
                        font=dict(family='Arial', size=11), showlegend=False,
                        xaxis=dict(gridcolor='#EEEEEE'), yaxis=dict(showgrid=False),
                        margin=dict(l=10, r=10, t=5, b=10))
-    st.plotly_chart(fig1, use_container_width=True)
+    st.plotly_chart(fig1, width='stretch')
 
 with col_right:
     st.subheader('Entire homes dominate the listings')
@@ -76,13 +76,13 @@ with col_right:
                        showlegend=False, font=dict(family='Arial', size=11),
                        xaxis=dict(gridcolor='#EEEEEE'), yaxis=dict(showgrid=False),
                        margin=dict(l=10, r=10, t=5, b=10))
-    st.plotly_chart(fig2, use_container_width=True)
+    st.plotly_chart(fig2, width='stretch')
 
 # ─────────────────────────────────────────────────────────────────────────────
 # expander (BBD: progressive disclosure) + footer with source and date
 # ─────────────────────────────────────────────────────────────────────────────
 with st.expander('📊 Show raw data sample'):
-    st.dataframe(filtered.head(100), use_container_width=True)
+    st.dataframe(filtered.head(100), width='stretch')
 
 st.divider()
 st.caption(

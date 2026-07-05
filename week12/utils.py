@@ -25,13 +25,15 @@ def init_filters(df):
     defaults = {
         'flt_rooms': list(df['room_type'].unique()),
         'flt_hoods': sorted(df['neighbourhood'].unique()),
-        'flt_price': (int(df['price'].min()), 300),
     }
     for key, value in defaults.items():
         if key not in st.session_state:
-            st.session_state[key] = value                  # initialise once
+            st.session_state[key] = value                  # initialise using the default
         else:
             st.session_state[key] = st.session_state[key]  # keep alive across pages
+    # slider owns its own initialisation — only keep it alive here
+    if 'flt_price' in st.session_state:
+        st.session_state['flt_price'] = st.session_state['flt_price']
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -46,8 +48,9 @@ def sidebar_filters(df, p95):
         st.multiselect('Room type', df['room_type'].unique(), key='flt_rooms')
         st.multiselect('Neighbourhood', sorted(df['neighbourhood'].unique()),
                        key='flt_hoods')
-        st.slider('Price (£/night)',
-                  int(df['price'].min()), int(df['price'].max()), key='flt_price')
+        min_p, max_p = int(df['price'].min()), int(df['price'].max())+1
+        st.slider('Price (£/night)', min_p, max_p,
+                  value=(min_p, max_p), key='flt_price')
         st.divider()
         # BBD: tell users about data decisions made on their behalf
         st.caption(f'Prices capped at 95th percentile (£{p95:.0f}) '

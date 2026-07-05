@@ -58,7 +58,7 @@ fig.update_layout(plot_bgcolor='white', paper_bgcolor='white',
                   yaxis=dict(gridcolor='#EEEEEE', title='% of listings'),
                   xaxis=dict(showgrid=False),
                   legend=dict(orientation='h', y=1.08))
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, width='stretch')
 
 # TEST: pick a neighbourhood, switch to page 1, change a filter,
 # come back — both the filters AND the selection must be where you left them.
